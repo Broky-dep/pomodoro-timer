@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>番茄钟</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Title Bar -->
+  <div class="titlebar">
+    <span class="titlebar-drag"></span>
+    <div class="titlebar-text">🍅 番茄钟 + 备忘录</div>
+    <div class="titlebar-actions">
+      <button class="tb-btn" onclick="window.electronAPI.minimize()">─</button>
+      <button class="tb-btn tb-close" onclick="window.electronAPI.close()">✕</button>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Mode Selector -->
+    <div class="mode-bar">
+      <button class="mode-btn active" data-mode="work">专注</button>
+      <button class="mode-btn" data-mode="shortBreak">短休息</button>
+      <button class="mode-btn" data-mode="longBreak">长休息</button>
+    </div>
+
+    <!-- Timer Display -->
+    <div class="timer-section">
+      <svg class="progress-ring" viewBox="0 0 260 260">
+        <circle class="ring-bg" cx="130" cy="130" r="115" />
+        <circle class="ring-progress" cx="130" cy="130" r="115"
+          stroke-dasharray="722.6" stroke-dashoffset="0" />
+      </svg>
+      <div class="timer-display">
+        <div class="timer-time" id="timerDisplay">25:00</div>
+        <div class="timer-phase" id="phaseLabel">准备开始</div>
+      </div>
+    </div>
+
+    <!-- Session Counter -->
+    <div class="session-counter">
+      <span id="sessionCount">0</span> / 4 个番茄
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn primary" id="startBtn">开始</button>
+      <button class="ctrl-btn" id="resetBtn">重置</button>
+    </div>
+
+    <!-- Settings Row -->
+    <div class="settings-row" id="settingsRow">
+      <div class="setting-group">
+        <label>专注</label>
+        <input type="number" id="workDuration" value="25" min="1" max="120">
+        <span>分</span>
+      </div>
+      <div class="setting-group">
+        <label>短休</label>
+        <input type="number" id="shortBreakDuration" value="5" min="1" max="60">
+        <span>分</span>
+      </div>
+      <div class="setting-group">
+        <label>长休</label>
+        <input type="number" id="longBreakDuration" value="15" min="1" max="120">
+        <span>分</span>
+      </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="notes-section">
+      <div class="notes-header">
+        <span>📝 备忘录</span>
+        <div class="notes-actions">
+          <span class="notes-status" id="notesStatus"></span>
+          <button class="notes-btn" id="saveNotesBtn">保存</button>
+          <button class="notes-btn secondary" id="addNoteBtn">+ 新建</button>
+        </div>
+      </div>
+      <div class="notes-list" id="notesList">
+        <div class="notes-empty">暂无备忘录，点击「+ 新建」开始记录</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Sound (hidden audio element) -->
+  <audio id="beepSound" preload="auto"></audio>
+  <script src="renderer.js"></script>
+</body>
+</html>
